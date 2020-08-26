@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const  validator = require('validator')
-const { hash, compare } = require('bcrypt')
+const { hash, compare } = require('bcryptjs')
 const adminSchema = new Schema(
     {
         name : {

@@ -44,7 +44,7 @@
     "validator": "^13.1.1"
   },
   "devDependencies": {
-    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "nodemon": "^2.0.4",
     "socket.io": "^2.3.0"
   }
