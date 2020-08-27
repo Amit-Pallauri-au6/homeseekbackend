@@ -35,10 +35,12 @@ module.exports = {
     verifyAdmin : async (req, res, next) => {
         try {
             token = req.headers.authorization
+            console.log(token)
             if(!token) return res.status(400).json({'message' : 'token needed'})
             const isVerified = await verify(token, privatekey)
                 const admin = await Admins.findOne({_id: isVerified.id})
                 req.admin = admin
+                console.log(admin)
                 const user = await Users.findOne({_id: isVerified.id})
                 req.user = user
 
