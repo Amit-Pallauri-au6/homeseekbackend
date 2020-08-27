@@ -73,11 +73,14 @@ module.exports = {
     async detailsCreate (req, res) {
         try {
             const admin = req.admin
+            console.log(admin)
             const id = req.params.homeId
             const foundPost = await Posts.findById({ _id: id })
+            console.log(foundPost)
             const body = JSON.parse(req.body.data)
             let images = req.files;
             const updateHouse = await Details.create({...body})
+            console.log(updateHouse)
             images.forEach(async element => {
                 if(element.originalname !== undefined){
                     const imageContent = bufferToString( element.originalname, element.buffer)
