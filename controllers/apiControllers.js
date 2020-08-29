@@ -244,6 +244,7 @@ module.exports = {
     async filterSearch (req, res) {
         try {
             var filteredData = []
+            // location and type and rent
             if(req.query.location && req.query.type && req.query.maxRent && req.query.minRent){
                 var locationWise = await Details.find({
                      'location.city' : req.query.location,
@@ -256,6 +257,7 @@ module.exports = {
                         ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
                     }
                 }
+                // location and type
             }else if(req.query.location && req.query.type){
                 console.log(req.query.location)
                 var locationWise = await Details.find({
@@ -268,12 +270,35 @@ module.exports = {
                         ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
                     }
                 }
+                // only location
             }else if(req.query.location){
                 var locationWise = await Details.find({
                      'location.city' : req.query.location
                     })
                 for( var i= 0; i<locationWise.length; i++){
                     const foundPosts = await Posts.find({ details : locationWise[i]._id, vacant : true }).populate('details')
+                    if(foundPosts){
+                        ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
+                    }
+                }
+                // only type
+            }else if(req.query.type){
+                var typeWise = await Details.find({
+                        type : req.query.type
+                    })
+                for( var i= 0; i<typeWise.length; i++){
+                    const foundPosts = await Posts.find({ details : typeWise[i]._id, vacant : true }).populate('details')
+                    if(foundPosts){
+                        ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
+                    }
+                }
+                // only rent
+            }else if(req.query.maxRent && req.query.minRent){
+                var rentWise = await Details.find({
+                        rent : { $gte : req.query.minRent, $lte : req.query.maxRent} 
+                    })
+                for( var i= 0; i<rentWise.length; i++){
+                    const foundPosts = await Posts.find({ details : rentWise[i]._id, vacant : true }).populate('details')
                     if(foundPosts){
                         ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
                     }
