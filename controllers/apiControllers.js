@@ -245,17 +245,16 @@ module.exports = {
         try {
             var filteredData = []
             if(req.query.location && req.query.type && req.query.maxRent && req.query.minRent){
-                // console.log(req.query.location)
                 var locationWise = await Details.find({
                      'location.city' : req.query.location,
                         type : req.query.type,
                         rent : { $gte : req.query.minRent, $lte : req.query.maxRent} 
                     })
-                // console.log(locationWise)
                 for( var i= 0; i<locationWise.length; i++){
                     const foundPosts = await Posts.find({ details : locationWise[i]._id, vacant : true }).populate('details')
-                    // console.log(foundPosts[0])
-                    ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
+                    if(foundPosts){
+                        ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
+                    }
                 }
             }else if(req.query.location && req.query.type){
                 console.log(req.query.location)
@@ -263,22 +262,21 @@ module.exports = {
                      'location.city' : req.query.location,
                         type : req.query.type
                     })
-                console.log(locationWise)
                 for( var i= 0; i<locationWise.length; i++){
                     const foundPosts = await Posts.find({ details : locationWise[i]._id, vacant : true }).populate('details')
-                    // console.log(foundPosts[0])
-                    ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
+                    if(foundPosts){
+                        ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
+                    }
                 }
             }else if(req.query.location){
-                // console.log(req.query.location)
                 var locationWise = await Details.find({
                      'location.city' : req.query.location
                     })
-                // console.log(locationWise)
                 for( var i= 0; i<locationWise.length; i++){
                     const foundPosts = await Posts.find({ details : locationWise[i]._id, vacant : true }).populate('details')
-                    // console.log(foundPosts[0])
-                    ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
+                    if(foundPosts){
+                        ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
+                    }
                 }
             }
             res.status(200).json({listings : filteredData})

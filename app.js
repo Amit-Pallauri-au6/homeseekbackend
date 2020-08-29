@@ -18,7 +18,7 @@ app.use(
   //       allowedHeaders: ["Content-Type"]
   //     })
 )
-// app.options('*', cors())
+app.options('*', cors())
 
 const userRoutes = require('./routes/userRoutes')
 const apiRoutes = require('./routes/apiRoutes');
