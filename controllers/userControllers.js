@@ -1,4 +1,5 @@
 const User = require('../models/Users')
+const Post = require('../models/Posts')
 const bufferToString = require('../utils/bufferToString')
 const cloudinary = require('../utils/cloudinary')
 const { sendMail } = require('../utils/sendMail')
@@ -65,7 +66,9 @@ module.exports = {
             const foundUser = await User.findOneAndUpdate({ accessToken : token }, { verified : true }, { new : true })
             if(!foundUser) return res.status(400).json({"message" : "Invalid credentials"})
             return res.status(200).json({
-                "message" : "you have been verified"
+                "message" : "you have been verified",
+                data : foundUser,
+                token : token
             })
         } catch (error) {
             console.log(error.message)
@@ -177,6 +180,27 @@ module.exports = {
             })
         } catch (error) {
             res.status(400).json({error : error})
+        }
+    },
+    getUserhome : async (req, res) => {
+        try {
+            const accessToken = req.headers.authorization
+            const foundUser = await User.findOne({ accessToken }).populate({ path : 'home', model : 'posts', populate : {
+                path : 'details',
+                model : 'details'
+            }})
+            console.log(foundUser)
+            if(!foundUser) return res.status(400).json({error : 'invalid credentials'})
+            return res.json({
+                message : 'found home',
+                token : accessToken,
+                data : foundUser
+            }) 
+        } catch (error) {
+            console.log(error)
+            res.status(400).json({
+                error : error
+            })
         }
     }
 } 

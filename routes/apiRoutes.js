@@ -23,7 +23,9 @@ const {
     userSpecificPosts,
     createOwnerRequests,
     verifyDepositAmountPayment,
-    verifyRentAmountPayment
+    verifyRentAmountPayment,
+    getOwnerRequests,
+    deleteOwnerRequests
 } = require("../controllers/apiControllers");
 const {
     verifyAdmin, verifyToken
@@ -118,6 +120,34 @@ router.get('/getAllPostedListings', verifyToken, async (req, res) =>{
     }
 })
 
-router.post('/createOwnerRequests', verifyToken, createOwnerRequests)
+router.post('/createOwnerRequests', verifyToken, createOwnerRequests);
+
+router.get('/admin/ownerrequests', verifyAdmin, getOwnerRequests);
+
+router.delete('/admin/delete/ownerrequests/:requestId', verifyAdmin, deleteOwnerRequests);
+
+router.get('/getAllUsersWithHome', verifyAdmin, async (req, res) => {
+    try {
+        var foundUsers = []
+        const allUsers = await User.find({}).populate('home')
+        for( var i= 0; i < allUsers.length; i++){
+            allUsers[i].home ? foundUsers.push(allUsers[i]) : null
+        }
+        res.status(200).json({ foundUsers })
+    } catch (error) {
+        res.status(400).json({error})
+    }
+})
+
+router.get('/getUserWithHome', verifyAdmin ,async (req, res) =>{
+    try {
+        const userId = req.query.userId
+        console.log(req.query)
+        const foundUser = await User.findOne({ _id : userId}).populate('home')
+        res.status(200).json({ foundUser})
+    } catch (error) {
+        res.status(400).json({error})
+    }
+})
 
 module.exports = router

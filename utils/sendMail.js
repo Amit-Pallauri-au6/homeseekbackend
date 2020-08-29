@@ -1,4 +1,4 @@
-const { email, apppassword, DEPLOYED_SERVER, DEPLOYED_CLIENT } = process.env
+const { email, apppassword } = process.env
 module.exports = {
     sendMail : async (foundUser, routeName, tokenStatus) => {
         // sending verification via mail
@@ -21,13 +21,13 @@ module.exports = {
              `<p>
                 Hello mr/mrs <b>${foundUser.firstName +" "+ foundUser.lastName}</b>
                 welcome to Home Seek. click 
-                <b><a href="${DEPLOYED_SERVER}/${routeName}/${foundUser.accessToken}"> here</a></b>
+                <b><a href="http://localhost:3000/${routeName}/${foundUser.accessToken}"> here</a></b>
               </p>`
             : ( tokenStatus === 'temp' ? 
                 `<p>
                     Hello mr/mrs <b>${foundUser.firstName +" "+ foundUser.lastName}</b>
                     welcome to Home Seek. click
-                    <a href=${DEPLOYED_CLIENT}/${routeName}/${foundUser.tempToken}>here</a>
+                    <a href=http://localhost:3001/${routeName}/${foundUser.tempToken}>here</a>
                 </p>` : null
             )
             
