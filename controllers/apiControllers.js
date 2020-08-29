@@ -252,10 +252,9 @@ module.exports = {
                         rent : { $gte : req.query.minRent, $lte : req.query.maxRent} 
                     })
                 for( var i= 0; i<locationWise.length; i++){
-                    const foundPosts = await Posts.find({ details : locationWise[i]._id, vacant : true }).populate('details')
-                    console.log(foundPosts[0])
+                    const foundPosts = await Posts.find({ details : locationWise[i]._id}).populate('details')
                     if(foundPosts){
-                        ((foundPosts[0].length === 0) && (foundPosts[0] === null) && (foundPosts[0] === undefined)) ? null : filteredData.push(foundPosts[0])
+                        ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
                     }
                 }
                 // location and type
@@ -266,7 +265,7 @@ module.exports = {
                         type : req.query.type
                     })
                 for( var i= 0; i<locationWise.length; i++){
-                    const foundPosts = await Posts.find({ details : locationWise[i]._id, vacant : true }).populate('details')
+                    const foundPosts = await Posts.find({ details : locationWise[i]._id }).populate('details')
                     if(foundPosts){
                         ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
                     }
@@ -277,7 +276,7 @@ module.exports = {
                      'location.city' : req.query.location
                     })
                 for( var i= 0; i<locationWise.length; i++){
-                    const foundPosts = await Posts.find({ details : locationWise[i]._id, vacant : true }).populate('details')
+                    const foundPosts = await Posts.find({ details : locationWise[i]._id }).populate('details')
                     if(foundPosts){
                         ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
                     }
@@ -288,7 +287,7 @@ module.exports = {
                         type : req.query.type
                     })
                 for( var i= 0; i<typeWise.length; i++){
-                    const foundPosts = await Posts.find({ details : typeWise[i]._id, vacant : true }).populate('details')
+                    const foundPosts = await Posts.find({ details : typeWise[i]._id }).populate('details')
                     if(foundPosts){
                         ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
                     }
@@ -299,7 +298,7 @@ module.exports = {
                         rent : { $gte : req.query.minRent, $lte : req.query.maxRent} 
                     })
                 for( var i= 0; i<rentWise.length; i++){
-                    const foundPosts = await Posts.find({ details : rentWise[i]._id, vacant : true }).populate('details')
+                    const foundPosts = await Posts.find({ details : rentWise[i]._id }).populate('details')
                     if(foundPosts){
                         ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
                     }
