@@ -253,8 +253,9 @@ module.exports = {
                     })
                 for( var i= 0; i<locationWise.length; i++){
                     const foundPosts = await Posts.find({ details : locationWise[i]._id, vacant : true }).populate('details')
+                    console.log(foundPosts)
                     if(foundPosts){
-                        ((foundPosts[0] === null) && (foundPosts[0] === undefined))? null : filteredData.push(foundPosts[0])
+                        ((foundPosts[0] === null) && (foundPosts[0] === undefined)) ? null : filteredData.push(foundPosts[0])
                     }
                 }
                 // location and type
