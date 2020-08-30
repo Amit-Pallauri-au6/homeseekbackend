@@ -171,7 +171,7 @@ module.exports = {
     async getUserRequests (req, res) {
         try {
             const requests = await UserRequests.find({}).populate({ path: 'user', model: 'user', populate: {
-                path: 'listings',
+                path: 'home',
                 model: 'posts'
             }});
             res.status(200).json({UserRequests: requests})
@@ -187,7 +187,7 @@ module.exports = {
             const foundRequest = await UserRequests.findByIdAndDelete({_id: id}).populate('user')
             await Users.findByIdAndUpdate({_id: foundRequest.user._id},{ $pull : {userRequests : foundRequest._id}})
             const requests = await UserRequests.find({}).populate({ path: 'user', model: 'user', populate: {
-                path: 'listings',
+                path: 'home',
                 model: 'posts'
             }});
             res.status(200).json({UserRequests: requests})
