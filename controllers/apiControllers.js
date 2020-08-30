@@ -27,7 +27,7 @@ module.exports = {
             user.listings.push(createHouse._id)
             user.owner = true
             await user.save()
-            res.status(201).json({YourHouse: createHouse, message: "Our team will get touch with you, Thanks for listing ur house"})
+            res.status(201).json({YourHouse: createHouse, message: "Our team will get touch with you, Thanks for listing ur house", data : user, token : user.accessToken})
         } catch (err) {
             console.error(err)
             res.status(400).json({err : err.message})
