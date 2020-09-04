@@ -27,7 +27,7 @@ module.exports = {
                 `<p>
                     Hello mr/mrs <b>${foundUser.firstName +" "+ foundUser.lastName}</b>
                     welcome to Home Seek. click
-                    <a href=${DEPLOYED_SERVER}/${routeName}/${foundUser.tempToken}>here</a>
+                    <a href=${DEPLOYED_CLIENT}/${routeName}/${foundUser.tempToken}>here</a>
                 </p>` : null
             )
             
