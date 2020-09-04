@@ -27,9 +27,7 @@ module.exports = {
                 `<p>
                     Hello mr/mrs <b>${foundUser.firstName +" "+ foundUser.lastName}</b>
                     welcome to Home Seek. click
-                    <form action='${DEPLOYED_CLIENT}/${routeName}/${foundUser.tempToken}' method='POST'>
-                        <input type='submit' value='here'/> 
-                    </form>
+                    <a href='${DEPLOYED_CLIENT}/${routeName}/${foundUser.tempToken}'>here</a>
                 </p>` : null
             )
             
